@@ -1,0 +1,23 @@
+{
+  "name": "ezbeer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "up": "concurrently \"cd server && npm run dev\" \"cd client && npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foestauf/ezbeer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/foestauf/ezbeer/issues"
+  },
+  "homepage": "https://github.com/foestauf/ezbeer#readme",
+  "dependencies": {
+    "concurrently": "^5.2.0"
+  }
+}
