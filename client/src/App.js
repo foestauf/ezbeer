@@ -7,6 +7,7 @@ import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
 import about from "./components/about";
 import home from "./components/home";
+import recipes from "./components/recipes";
 
 function App() {
   return (
@@ -16,13 +17,15 @@ function App() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav variant="pills" defaultActiveKey="/" className="mr-auto">
-              <LinkContainer to="/"><Nav.Link><Button>Home</Button></Nav.Link></LinkContainer>{' '}
-              <LinkContainer to="/about"><Nav.Link><Button>About</Button></Nav.Link></LinkContainer>{' '}
+              <LinkContainer to="/"><Nav.Link><Button>Home</Button></Nav.Link></LinkContainer>
+              <LinkContainer to="/recipes"><Nav.Link><Button>Recipes</Button></Nav.Link></LinkContainer>
+              <LinkContainer to="/about"><Nav.Link><Button>About</Button></Nav.Link></LinkContainer>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
         <Switch>
           <Route path="/about" component={about}/>
+          <Route path="/recipes" component={recipes}/>
           <Route exact path="/" component={home}/>
         </Switch>
       </BrowserRouter>
