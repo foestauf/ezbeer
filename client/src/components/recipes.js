@@ -5,6 +5,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
+import "../css/recipes.scss";
+import InputGroup from "react-bootstrap/InputGroup";
+import FormControl from "react-bootstrap/FormControl";
+import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
+
 
 export default function () {
     return(
@@ -14,13 +20,66 @@ export default function () {
             </Helmet>
             <Container fluid>
                 <Row>
-                    <Col>Make me a status bar "Recipe Name" "Recipe Version" "Style" Maybe some buttons</Col>
+                    <Col className="statusBar">
+                        <Row>
+                            <InputGroup size="sm">
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text>Name</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl readOnly size="sm" placeholder="BEER NAME"></FormControl>
+                            </InputGroup>
+
+                        </Row>
+                    </Col>
                 </Row>
                 <Row>
-                    <Col>Recipe Control Panel</Col>
+                    <Col>Recipe Control Panel
+                    <div>INSERT ICONS</div></Col>
                     <Col md={8}><Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
                         <Tab eventKey="profile" title="Profile">
                             Profile Info
+                            <InputGroup>
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text>Name</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl placeholder="Beer Name" aria-label="BeerName"/>
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text>Brewer</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl placeholder="Brewer Name" aria-label="BrewerName"/>
+                            </InputGroup>
+                            <InputGroup>
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text>Batch Size</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl placeholder="Size in Gallons" aria-label="BatchSize"/>
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text>Boil Time</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl placeholder="60" aria-label="BoilTime"/>
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text>Efficiency</InputGroup.Text>
+                                <FormControl placeholder="80" aria-label="efficiency"/>
+                                </InputGroup.Prepend>
+                                <InputGroup.Append>
+                                    <InputGroup.Text>%</InputGroup.Text>
+                                </InputGroup.Append>
+                            </InputGroup>
+                            <div id="ingredients">
+                                <Table striped bordered hover>
+                                    <thead>
+                                    <tr>
+                                        <th>Amount</th>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>%</th>
+                                        <th>IBU</th>
+                                        <th>Inventory</th>
+                                        <th>Cost</th>
+                                    </tr>
+                                    </thead>
+                                </Table>
+                            </div>
                         </Tab>
                         <Tab eventKey="Mash" title="Mash">
                             Some homie Info
@@ -30,7 +89,16 @@ export default function () {
                             Wut
                         </Tab>
                     </Tabs></Col>
-                    <Col>Recipe functions</Col>
+                    <Col>
+                        <Button>Add Grain</Button>
+                        <Button>Add Hops</Button>
+                        <Button>Add Misc</Button>
+                        <Button>Add Yeast</Button>
+                        <Button>Add Water</Button>
+                        <Button>Edit</Button>
+                        <Button>Delete</Button>
+                        <Button>I don't know</Button>
+                    </Col>
                 </Row>
                 <Row>
                     <Col>Recipe Infos, ABV, IBU, total weight</Col>
