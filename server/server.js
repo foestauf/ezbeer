@@ -14,11 +14,13 @@ const app = express();
 app.use(morgan('combined'));
 app.use(cors());
 app.use(cors({optionSuccessStatus: 200}));  // some legacy browsers choke on 204
-
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: false
+    extended: true
 })
 );
+
+
 // DB CONFIG
 const db = process.env.MONGO_URI;
 

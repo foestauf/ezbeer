@@ -12,6 +12,8 @@ class Login extends Component {
             password: "",
             errors: {}
         };
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onChange = this.onChange.bind(this);
     }
     componentDidMount() {
         // If logged in and user navigates to Login page, should redirect them to dashboard
