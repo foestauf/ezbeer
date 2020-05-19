@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
+import Button from "react-bootstrap/Button";
 class Login extends Component {
     constructor() {
         super();
@@ -96,7 +97,7 @@ class Login extends Component {
                 </span>
                             </div>
                             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                                <button
+                                <Button
                                     style={{
                                         width: "150px",
                                         borderRadius: "3px",
@@ -107,7 +108,7 @@ class Login extends Component {
                                     className="btn btn-large waves-effect waves-light hoverable blue accent-3"
                                 >
                                     Login
-                                </button>
+                                </Button>
                             </div>
                         </form>
                     </div>

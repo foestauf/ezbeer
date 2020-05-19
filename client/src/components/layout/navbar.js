@@ -1,26 +1,25 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import Nav from "react-bootstrap/Nav";
+import {LinkContainer} from "react-router-bootstrap";
+import Button from "react-bootstrap/Button";
+import Navbar from "react-bootstrap/Navbar";
 
-class Navbar extends Component {
+class Navigation extends Component {
     render() {
         return (
-            <div className="navbar-fixed">
-                <nav className="z-depth-0">
-                    <div className="nav-wrapper white">
-                        <Link
-                            to="/"
-                            style={{
-                                fontFamily: "monospace"
-                            }}
-                            className="col s5 brand-logo center black-text"
-                        >
-                            <i className="material-icons">code</i>
-                            MERN
-                        </Link>
-                    </div>
-                </nav>
-            </div>
+            <Navbar bg="dark" expand="lg" variant="dark">
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav variant="pills" defaultActiveKey="/" className="mr-auto">
+                        <LinkContainer to="/"><Nav.Link><Button variant="primary">Home</Button></Nav.Link></LinkContainer>
+                        <LinkContainer to="/recipes"><Nav.Link><Button variant="primary">Recipes</Button></Nav.Link></LinkContainer>
+                        <LinkContainer to="/about"><Nav.Link><Button variant="primary">About</Button></Nav.Link></LinkContainer>
+                        <LinkContainer to="/dashboard"><Nav.Link><Button variant="primary">Dashboard</Button> </Nav.Link></LinkContainer>
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+
         );
     }
 }
-export default Navbar;
+export default Navigation;

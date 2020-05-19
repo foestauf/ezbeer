@@ -40,14 +40,11 @@ require("./config/passport")(passport);
 // Routes
 app.use("/api/users", users);
 
-
 app.get('/sayHello', function (req, res) {
     res.send('Hello from the back-end.');
 });
 
 app.use('/api/timestamp', timeStamp);
-
-
 
 app.listen(APP_PORT);
 console.log('Webserver listening to port', APP_PORT);
