@@ -90,14 +90,14 @@ export default function () {
                         </Tab>
                     </Tabs></Col>
                     <Col>
-                        <Button>Add Grain</Button>
-                        <Button>Add Hops</Button>
-                        <Button>Add Misc</Button>
-                        <Button>Add Yeast</Button>
-                        <Button>Add Water</Button>
-                        <Button>Edit</Button>
-                        <Button>Delete</Button>
-                        <Button>I don't know</Button>
+                        <Button size="sm" block>Add Grain</Button>
+                        <Button size="sm" block>Add Hops</Button>
+                        <Button size="sm" block>Add Misc</Button>
+                        <Button size="sm" block>Add Yeast</Button>
+                        <Button size="sm" block>Add Water</Button>
+                        <Button size="sm" block>Edit</Button>
+                        <Button size="sm" block>Delete</Button>
+                        <Button size="sm" block>I don't know</Button>
                     </Col>
                 </Row>
                 <Row>

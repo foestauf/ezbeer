@@ -1,36 +1,58 @@
-import React from 'react';
-import './css/App.scss';
-import {Switch, BrowserRouter, Route} from "react-router-dom";
-import {LinkContainer} from "react-router-bootstrap";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import Button from "react-bootstrap/Button";
+import React, {Component} from "react";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+import "bootstrap/dist/css/bootstrap.min.css"
 import about from "./components/about";
-import home from "./components/home";
 import recipes from "./components/recipes";
+import {logoutUser, setCurrentUser} from "./actions/authActions";
+import {Provider} from "react-redux";
+import store from "./store";
+import Landing from "./components/layout/landing";
+import Register from "./components/auth/register";
+import Login from "./components/auth/login";
+import PrivateRoute from "./components/private-route/PrivateRoute";
+import Dashboard from "./components/dashboard/Dashboard";
+import Navigation from "./components/layout/navbar";
+// Check for token to keep user logged in
+if (localStorage.jwtToken) {
+    // Set auth token header auth
+    const token = localStorage.jwtToken;
+    setAuthToken(token);
+    // Decode token and get user info and exp
+    const decoded = jwt_decode(token);
+    // Set user and isAuthenticated
+    store.dispatch(setCurrentUser(decoded));
+// Check for expired token
+    const currentTime = Date.now() / 1000; // to get in milliseconds
+    if (decoded.exp < currentTime) {
+        // Logout user
+        store.dispatch(logoutUser());
+        // Redirect to login
+        window.location.href = "./login";
+    }
+}
 
-function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Navbar bg="dark" expand="lg" variant="dark">
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav variant="pills" defaultActiveKey="/" className="mr-auto">
-              <LinkContainer to="/"><Nav.Link><Button>Home</Button></Nav.Link></LinkContainer>
-              <LinkContainer to="/recipes"><Nav.Link><Button>Recipes</Button></Nav.Link></LinkContainer>
-              <LinkContainer to="/about"><Nav.Link><Button>About</Button></Nav.Link></LinkContainer>
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
-        <Switch>
-          <Route path="/about" component={about}/>
-          <Route path="/recipes" component={recipes}/>
-          <Route exact path="/" component={home}/>
-        </Switch>
-      </BrowserRouter>
-    </div>
-  );
+class App extends Component {
+    render() {
+        return (
+            <Provider store={store}>
+                <Router>
+                    <div className="App">
+                        <Navigation/>
+                        <Route exact path="/" component={Landing}/>
+                        <Route exact path="/register" component={Register}/>
+                        <Route exact path="/login" component={Login}/>
+                        <Route path="/about" component={about}/>
+                        <Switch>
+                            <PrivateRoute exact path="/dashboard" component={Dashboard}/>
+                            <PrivateRoute exact path="/recipes" component={recipes}/>
+                        </Switch>
+                    </div>
+                </Router>
+            </Provider>
+        );
+    }
 }
 
 export default App;
