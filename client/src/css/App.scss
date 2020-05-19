@@ -4,11 +4,6 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -33,5 +28,54 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+#yeast-calc {
+  .form-control {
+    margin: 15px;
+    text-align: center;
+  }
+
+  .row {
+    border: 1px solid black;
+
+    .input {
+      background: yellow;
+    }
+
+  }
+
+  .col {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+
+    .input {
+      background: yellow;
+    }
+    .topRow {
+      flex: auto;
+      display: inline;
+    }
+
+
+  }
+
+  .input {
+    background: yellow;
+  }
+
+  .output {
+    background: lightblue;
+  }
+
+  .leftAnchor-col {
+    display: flex;
+    flex-direction: column;
+
+    .row {
+      flex: 1;
+    }
   }
 }

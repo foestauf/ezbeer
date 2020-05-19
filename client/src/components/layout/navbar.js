@@ -13,6 +13,7 @@ class Navigation extends Component {
                     <Nav variant="pills" defaultActiveKey="/" className="mr-auto">
                         <LinkContainer to="/"><Nav.Link><Button variant="primary">Home</Button></Nav.Link></LinkContainer>
                         <LinkContainer to="/recipes"><Nav.Link><Button variant="primary">Recipes</Button></Nav.Link></LinkContainer>
+                        <LinkContainer to="/yeastcalc"><Nav.Link><Button>Yeast Calculator</Button></Nav.Link></LinkContainer>
                         <LinkContainer to="/about"><Nav.Link><Button variant="primary">About</Button></Nav.Link></LinkContainer>
                         <LinkContainer to="/dashboard"><Nav.Link><Button variant="primary">Dashboard</Button> </Nav.Link></LinkContainer>
                     </Nav>
