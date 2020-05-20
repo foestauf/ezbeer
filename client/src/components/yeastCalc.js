@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from "react";
+import React, {useEffect, useReducer, useState} from "react";
 import {Container} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -8,7 +8,8 @@ const initialState = {
     fermVol: 10,
     dillution: 200,
     cellConc: 1.0,
-    densSlurry: 1.1
+    densSlurry: 1.1,
+    numSquares: 25
 }
 
 const yeastReducer = (state, action) => {
@@ -26,9 +27,9 @@ const yeastReducer = (state, action) => {
         case 'DILLUTION':
             return {...state, dillution: action.payload};
         case 'LIVECELLS':
-            return {...state, liveCells: action.payload, cellsCounted: action.payload * state.deadCells}
+            return {...state, liveCells: action.payload}
         case 'DEADCELLS':
-            return {...state, deadCells: action.payload, cellsCounted: action.payload * state.liveCells}
+            return {...state, deadCells: action.payload}
         default:
             throw new Error('WTF OVER')
     }
@@ -36,6 +37,28 @@ const yeastReducer = (state, action) => {
 
 const YeastCalculator = () => {
     const [state, dispatch] = useReducer(yeastReducer, initialState);
+    const [output, setOutput] = useState({});
+    function calc() {
+        let cellsCounted = (state.liveCells + state.deadCells)
+        let viability = (state.liveCells / cellsCounted * 100).toFixed(2)
+        let squares = 25 / state.numSquares
+        let fermVolML = (state.fermVol * 31) * 3785.41;
+        let cellsPerML = cellsCounted * squares * state.dillution * Math.pow(10,4)
+        let cellConcPerMLPerP = (state.cellConc * Math.pow(10,6))
+        let totalCellsPitch = cellsPerML * fermVolML * state.cellConc
+        setOutput({...output,
+            viability: viability,
+            cellsCounted: cellsCounted,
+            cellsML: cellsPerML.toExponential(2),
+            fermGal: state.fermVol * 31,
+            fermML: fermVolML.toExponential(2),
+            cellConcPerMLPerP: cellConcPerMLPerP.toExponential(2),
+            cellConcML: (cellConcPerMLPerP * state.gravity).toExponential(2),
+            totalCellsPitch: totalCellsPitch.toExponential(2)
+
+        })
+    }
+    useEffect(calc,[state]);
     return (
         <Container style={{marginTop: "30px"}} id="yeast-calc">
             <Row>
@@ -46,19 +69,19 @@ const YeastCalculator = () => {
                 <Col className="leftAnchor-col">
                     <Row className="topRow">Fermentation Volume (in BBL)</Row>
                     <Row className="input btmCol">
-                        <Form.Control value={state.fermVol}
+                        <Form.Control placeholder={state.fermVol}
                                       onChange={e => dispatch({
                                           type: 'FERMVOL',
                                           payload: Number(e.target.value)
                                       })} size="sm" type="text"/></Row>
                 </Col>
                 <Col>This is size of equipment</Col>
-                <InfoCell title="Cell Count (Cells/ML)"/>
-                <InfoCell title="Fermentation Volume"/>
-                <InfoCell title="Fermentation Volume (mL)"/>
-                <InfoCell title="Desired Cell Concentration (Cells/Ml-P)"/>
-                <InfoCell title="Desired Cell Concentration (Cells/mL)"/>
-                <InfoCell title="Total # Cells for Pitch"/>
+                <InfoCell title="Cell Count (Cells/ML)" value={output.cellsML}/>
+                <InfoCell title="Fermentation Volume (gal)" value={output.fermGal}/>
+                <InfoCell title="Fermentation Volume (mL)" value={output.fermML}/>
+                <InfoCell title="Desired Cell Concentration (Cells/mL-P)" value={output.cellConcPerMLPerP}/>
+                <InfoCell title="Desired Cell Concentration (Cells/mL)" value={output.cellConcML}/>
+                <InfoCell title="Total # Cells for Pitch" value={output.totalCellsPitch}/>
             </Row>
             <Row>
                 <Col className="leftAnchor-col">
@@ -82,7 +105,7 @@ const YeastCalculator = () => {
                 <Col className="leftAnchor-col">
                     <Row className="topRow">Desired Cell concentration (Cells/mL x 1E6)</Row>
                     <Row className="input">
-                        <Form.Control value={state.cellConc}
+                        <Form.Control placeholder={state.cellConc}
                                       onChange={e => dispatch({
                                               type: 'CELLCONC',
                                               payload: Number(e.target.value)
@@ -100,7 +123,7 @@ const YeastCalculator = () => {
                 <Col className="leftAnchor-col">
                     <Row className="topRow">Density of Slurry (g/mL)</Row>
                     <Row className="input">
-                        <Form.Control value={state.densSlurry}
+                        <Form.Control placeholder={state.densSlurry}
                                       onChange={e => dispatch({
                                           type: 'DENSSLURRY',
                                           payload: Number(e.target.value)
@@ -111,11 +134,11 @@ const YeastCalculator = () => {
                     <Row>This is the density of the slury being pitched. This can be measured of if unknown go with
                         1.1g/mL</Row>
                 </Col>
-                <InfoCell title="Total Cells Counted" value={state.cellsCounted}/>
+                <InfoCell title="Total Cells Counted" value={output.cellsCounted}/>
                 <Col>
                     <Row className="topRow"># of Squares Counted</Row>
                     <Row className="input">
-                        <Form.Control value={state.numSquares} onChange={e => dispatch({
+                        <Form.Control placeholder={state.numSquares} onChange={e => dispatch({
                             type: 'NUMSQUARES',
                             payload: Number(e.target.value)
                         })} size="sm"
@@ -124,7 +147,7 @@ const YeastCalculator = () => {
                 <Col>
                     <Row className="topRow">Dilution</Row>
                     <Row className="input">
-                        <Form.Control value={state.dillution}
+                        <Form.Control placeholder={state.dillution}
                                       onChange={e => dispatch({
                                           type: 'DILLUTION',
                                           payload: Number(e.target.value)
@@ -134,7 +157,7 @@ const YeastCalculator = () => {
                 <Col>
                     <Row className="topRow">Live Cells Counted</Row>
                     <Row className="input">
-                        <Form.Control value={state.liveCells}
+                        <Form.Control placeholder={state.liveCells}
                                       onChange={e => dispatch({
                                           type: 'LIVECELLS',
                                           payload: Number(e.target.value)
@@ -144,26 +167,33 @@ const YeastCalculator = () => {
                 <Col>
                     <Row className="topRow">Dead Cells Counted</Row>
                     <Row className="input">
-                        <Form.Control value={state.deadCells}
+                        <Form.Control placeholder={state.deadCells}
                                       onChange={e => dispatch({
                                           type: 'DEADCELLS',
                                           payload: Number(e.target.value)
                                       })} size="sm"
                                                          type="text"/></Row>
                 </Col>
-                <InfoCell title="% Viability (Do not pitch under 90%)"/>
+                <InfoCell title="% Viability (Do not pitch under 90%)" value={output.viability}/>
             </Row>
         </Container>
     )
 }
 
 const InfoCell = (props) => {
+    function isNaN(n) {
+        if (n >= 0) {
+            return n
+        } else {
+            return '-'
+        }
+    }
     return (
         <Col>
             <Row className="topRow">{props.title}</Row>
             <Row className="output">
-                <Form.Control size="sm" type="text" readOnly placeHolder="-"
-                                                  value={props.value}/></Row>
+                <Form.Control size="sm" type="text" readOnly placeholder="-"
+                                                  value={isNaN(props.value)}/></Row>
         </Col>
     )
 }
