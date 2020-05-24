@@ -45,7 +45,13 @@ const YeastCalculator = () => {
         let fermVolML = (state.fermVol * 31) * 3785.41;
         let cellsPerML = cellsCounted * squares * state.dillution * Math.pow(10,4)
         let cellConcPerMLPerP = (state.cellConc * Math.pow(10,6))
-        let totalCellsPitch = cellsPerML * fermVolML * state.cellConc
+        let totalCellsPitch = state.fermVol * 117180 * state.gravity * Math.pow(10, 5)
+        let volNeededML = totalCellsPitch / cellsPerML
+        let volNeededLiter = volNeededML / 1000
+        let volNeededGal = volNeededLiter * 0.264172
+        let massNeededGram = volNeededML / state.densSlurry
+        let massNeededKG = massNeededGram / 1000
+        let massNeededLB = massNeededKG * 2.20462
         setOutput({...output,
             viability: viability,
             cellsCounted: cellsCounted,
@@ -54,8 +60,13 @@ const YeastCalculator = () => {
             fermML: fermVolML.toExponential(2),
             cellConcPerMLPerP: cellConcPerMLPerP.toExponential(2),
             cellConcML: (cellConcPerMLPerP * state.gravity).toExponential(2),
-            totalCellsPitch: totalCellsPitch.toExponential(2)
-
+            totalCellsPitch: totalCellsPitch.toExponential(2),
+            volNeededML: volNeededML.toExponential((2)),
+            volNeededLiter: volNeededLiter.toFixed(2),
+            volNeededGal: volNeededGal.toFixed(2),
+            massNeededGram: massNeededGram.toExponential(2),
+            massNeededKG: massNeededKG.toFixed(2),
+            massNeededLB: massNeededLB.toFixed(2)
         })
     }
     useEffect(calc,[state]);
@@ -94,12 +105,12 @@ const YeastCalculator = () => {
                                       type="text"/></Row>
                 </Col>
                 <Col>This is the expected gravity of the beer being pitched into</Col>
-                <InfoCell title="Volume of Slurry Needed (mL)"/>
-                <InfoCell title="Volume of Slurry needed (L)"/>
-                <InfoCell title="Volume of Slurry Needed (Gal)"/>
-                <InfoCell title="Mass of slurry Needed(g)"/>
-                <InfoCell title="Mass of slurry needed (KG)"/>
-                <InfoCell title="Mass of slurry needed (lb)"/>
+                <InfoCell title="Volume of Slurry Needed (mL)" value={output.volNeededML}/>
+                <InfoCell title="Volume of Slurry needed (L)" value={output.volNeededLiter}/>
+                <InfoCell title="Volume of Slurry Needed (Gal)" value={output.volNeededGal}/>
+                <InfoCell title="Mass of slurry Needed(g)" value={output.massNeededGram}/>
+                <InfoCell title="Mass of slurry needed (KG)" value={output.massNeededKG}/>
+                <InfoCell title="Mass of slurry needed (lb)" value={output.massNeededLB}/>
             </Row>
             <Row>
                 <Col className="leftAnchor-col">
