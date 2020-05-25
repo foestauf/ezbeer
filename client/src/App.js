@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
-import "bootstrap/dist/css/bootstrap.min.css"
+import "./css/App.scss"
 import about from "./components/about";
 import recipes from "./components/recipes";
 import {logoutUser, setCurrentUser} from "./actions/authActions";
@@ -14,6 +14,7 @@ import Login from "./components/auth/login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 import Navigation from "./components/layout/navbar";
+import YeastCalculator from "./components/yeastCalc";
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
     // Set auth token header auth
@@ -43,6 +44,7 @@ class App extends Component {
                         <Route exact path="/" component={Landing}/>
                         <Route exact path="/register" component={Register}/>
                         <Route exact path="/login" component={Login}/>
+                        <Route exact path="/yeastcalc" component={YeastCalculator}/>
                         <Route path="/about" component={about}/>
                         <Switch>
                             <PrivateRoute exact path="/dashboard" component={Dashboard}/>
