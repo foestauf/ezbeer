@@ -3,10 +3,10 @@ const morgan = require('morgan');
 const cors = require('cors');
 const timeStamp = require('./routes/timestamp');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 require('dotenv').config();
 const passport = require("passport");
 const users = require("./routes/users");
+const auth = require("./middleware/auth")
 
 const APP_PORT = 4000;
 const app = express();
@@ -14,8 +14,8 @@ const app = express();
 app.use(morgan('combined'));
 app.use(cors());
 app.use(cors({optionSuccessStatus: 200}));  // some legacy browsers choke on 204
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
+app.use(express.json());
+app.use(express.urlencoded({
     extended: true
 })
 );
@@ -40,7 +40,8 @@ require("./config/passport")(passport);
 // Routes
 app.use("/api/users", users);
 
-app.get('/sayHello', function (req, res) {
+app.get('/sayHello', auth, function (req, res) {
+    console.log(req.user)
     res.send('Hello from the back-end.');
 });
 
