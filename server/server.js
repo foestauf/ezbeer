@@ -7,6 +7,8 @@ require('dotenv').config();
 const passport = require("passport");
 const users = require("./routes/users");
 const auth = require("./middleware/auth")
+const recipes = require('./routes/recipes')
+
 
 const APP_PORT = 4000;
 const app = express();
@@ -46,6 +48,8 @@ app.get('/sayHello', auth, function (req, res) {
 });
 
 app.use('/api/timestamp', timeStamp);
+
+app.use('/api/recipes', auth, recipes)
 
 app.listen(APP_PORT);
 console.log('Webserver listening to port', APP_PORT);

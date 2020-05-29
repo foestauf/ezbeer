@@ -15,6 +15,7 @@ import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 import Navigation from "./components/layout/navbar";
 import YeastCalculator from "./components/yeastCalc";
+import RecipeManager from "./recipeManager";
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
     // Set auth token header auth
@@ -49,6 +50,7 @@ class App extends Component {
                         <Switch>
                             <PrivateRoute exact path="/dashboard" component={Dashboard}/>
                             <PrivateRoute exact path="/recipes" component={recipes}/>
+                            <PrivateRoute exact path="/recipemanager" component={RecipeManager}/>
                         </Switch>
                     </div>
                 </Router>
