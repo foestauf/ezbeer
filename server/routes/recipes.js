@@ -4,19 +4,14 @@ const Recipe = require("../models/recipe")
 
 
 router.get("/", (req, res) => {
-    let user = req.body
-    console.log(user)
+    let user = req.user.id
     Recipe.find({owner: user}, (err, docs) => {
         if (err) {
             return res.status(404).json({ userNotFound: "User not found"})
         }
-        console.log('Inside recipe finder');
     })
         .then((docs) => {
-            console.log('I find this' + docs);
-            res.json({
-                owner: docs.owner
-            })
+            res.json(docs)
         })
         .catch(err => console.log(err))
 
@@ -31,7 +26,7 @@ router.post("/new", (req, res) => {
     })
     newRecipe
         .save()
-        .then(res.status(400).json({ complete: "We did it"}))
+        .then(res.status(200).json({ complete: "We did it"}))
         .catch(err => console.log(err))
 })
 

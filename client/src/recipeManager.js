@@ -2,29 +2,32 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux"
 import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
 const axios = require("axios")
 
 const RecipeManager = (props) => {
+    const [recipeList, setRecipeList] = useState([]);
     useEffect(() => {
-        fetchData(setRecipeList, "/api/recipes")
-    },[])
+        const fetchData = async (query, uri) => {
+            await
+                axios
+                    .get(uri, {headers: {'Content-Type': 'application/json'}})
+                    .then(res => {
+                        const dataFromServer = res.data
+                        console.log(dataFromServer);
+                        query(dataFromServer)
+                    })
+                    .catch(err => console.log(err.response))
 
-    const fetchData = async (query, uri) => {
-        await
-            axios
-                .get(uri)
-                .then(res => {
-                    const dataFromServer = res.data
-                    query(dataFromServer)
-                })
+        }
 
-    }
+        fetchData(setRecipeList, "/api/recipes/")
+    }, [props])
 
-    const { user } = props.auth;
-    console.log(user);
-    const [recipeList, setRecipeList] = useState();
+
     return (
         <div>Recipes
+            <Button>New Recipe</Button>
             <Table striped bordered hover>
                 <thead>
                 <tr>
@@ -33,6 +36,14 @@ const RecipeManager = (props) => {
                 </tr>
                 </thead>
                 <tbody>
+                {recipeList.map((value, index) => {
+                    return (
+                        <tr key={index}>
+                            <td>{value.name}</td>
+                            <td>{value.style}</td>
+                        </tr>
+                    )
+                })}
 
                 </tbody>
             </Table>
