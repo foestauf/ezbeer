@@ -22,7 +22,7 @@ router.post("/new", (req, res) => {
         name: req.body.name,
         style: req.body.style,
         ingredients: req.body.ingredientList,
-        owner: req.body.ownerID
+        owner: req.body.owner
     })
     newRecipe
         .save()
