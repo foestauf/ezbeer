@@ -43,19 +43,19 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 
 app.get('/sayHello', function (req, res) {
-    console.log(req.user)
+    console.log(req.user);
     res.send('Hello from the back-end.');
 });
 
 app.use('/api/timestamp', timeStamp);
 
-app.use('/api/recipes', jwt({secret: process.env.SECRETORKEY}), recipes)
+app.use('/api/recipes', jwt({secret: process.env.SECRETORKEY}), recipes);
 
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
         res.status(401).send('invalid token')
     }
-})
+});
 
 app.listen(APP_PORT);
 console.log('Webserver listening to port', APP_PORT);

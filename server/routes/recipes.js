@@ -1,10 +1,10 @@
-const express = require("express")
+const express = require("express");
 const router = express.Router();
-const Recipe = require("../models/recipe")
+const Recipe = require("../models/recipe");
 
 
 router.get("/", (req, res) => {
-    let user = req.user.id
+    let user = req.user.id;
     Recipe.find({owner: user}, (err, docs) => {
         if (err) {
             return res.status(404).json({ userNotFound: "User not found"})
@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
         })
         .catch(err => console.log(err))
 
-})
+});
 
 router.post("/new", (req, res) => {
     const newRecipe = new Recipe({
@@ -23,11 +23,11 @@ router.post("/new", (req, res) => {
         style: req.body.style,
         ingredients: req.body.ingredientList,
         owner: req.body.owner
-    })
+    });
     newRecipe
         .save()
         .then(res.status(200).json({ complete: "We did it"}))
         .catch(err => console.log(err))
-})
+});
 
 module.exports = router;
