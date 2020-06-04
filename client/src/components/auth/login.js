@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
 import Button from "react-bootstrap/Button";
+
 class Login extends Component {
     constructor() {
         super();
@@ -13,8 +14,6 @@ class Login extends Component {
             password: "",
             errors: {}
         };
-        this.onSubmit = this.onSubmit.bind(this);
-        this.onChange = this.onChange.bind(this);
     }
     componentDidMount() {
         // If logged in and user navigates to Login page, should redirect them to dashboard

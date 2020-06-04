@@ -26,7 +26,7 @@ export default function () {
                                 <InputGroup.Prepend>
                                     <InputGroup.Text>Name</InputGroup.Text>
                                 </InputGroup.Prepend>
-                                <FormControl readOnly size="sm" placeholder="BEER NAME"></FormControl>
+                                <FormControl readOnly size="sm" placeholder="BEER NAME"/>
                             </InputGroup>
 
                         </Row>

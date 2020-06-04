@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import Button from "react-bootstrap/Button";
+import {LinkContainer} from "react-router-bootstrap"
+import Nav from "react-bootstrap/Nav"
+
 class Dashboard extends Component {
     onLogoutClick = e => {
         e.preventDefault();
@@ -34,6 +37,7 @@ class Dashboard extends Component {
                             Logout
                         </Button>
                     </div>
+                    <LinkContainer to="/recipemanager"><Nav.Link><Button>Recipe Manager</Button></Nav.Link></LinkContainer>
                 </div>
             </div>
         );
