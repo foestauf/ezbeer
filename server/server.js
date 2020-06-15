@@ -2,14 +2,12 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const timeStamp = require('./routes/timestamp');
+const jwt = require('express-jwt');
 require('dotenv').config();
-// eslint-disable-next-line import/order
 const passport = require('passport');
 const users = require('./routes/users');
 const recipes = require('./routes/recipes');
-// eslint-disable-next-line import/order
-const jwt = require('express-jwt');
+const timeStamp = require('./routes/timestamp');
 
 const APP_PORT = 4000;
 const app = express();
@@ -56,4 +54,4 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(APP_PORT);
-console.log('Webserver listening to port', APP_PORT);
+console.log('Web server listening to port', APP_PORT);
