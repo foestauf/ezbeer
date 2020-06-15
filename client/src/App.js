@@ -1,12 +1,12 @@
 import React, {Component} from "react";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import {Provider} from "react-redux";
 import setAuthToken from "./utils/setAuthToken";
 import "./css/App.scss"
 import about from "./components/about";
 import recipes from "./components/recipes";
 import {logoutUser, setCurrentUser} from "./actions/authActions";
-import {Provider} from "react-redux";
 import store from "./store";
 import Landing from "./components/layout/landing";
 import Register from "./components/auth/register";
