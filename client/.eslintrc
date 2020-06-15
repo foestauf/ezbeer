@@ -11,8 +11,8 @@
     "browser": true,
     "jest": true
   },
-  "extends": ["airbnb", "prettier", "prettier/react"],
-  "plugins": ["react-hooks"],
+  "extends": ["react-app","airbnb", "prettier", "prettier/react"],
+  "plugins": ["react-hooks", "jsx-a11y"],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
