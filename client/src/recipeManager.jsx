@@ -1,17 +1,22 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux"
+import { connect, useDispatch } from "react-redux"
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
+
 const axios = require("axios")
 
 const RecipeManager = (props) => {
     const [recipeList, setRecipeList] = useState([]);
     const [modalShow, setModalShow] = useState(false);
     const [serverRes, setServerRes] = useState();
+
+
+    const { auth } = props
+    const { user } = auth
 
     useEffect(() => {
         const fetchData = async (query, uri) => {
@@ -20,6 +25,7 @@ const RecipeManager = (props) => {
                     .get(uri, {headers: {'Content-Type': 'application/json'}})
                     .then(res => {
                         const dataFromServer = res.data
+                        console.log(dataFromServer)
                         query(dataFromServer)
                     })
                     .catch(err => console.log(err.response))
@@ -35,13 +41,14 @@ const RecipeManager = (props) => {
         <NewRecipeModal
             res={setServerRes}
             show={modalShow}
-            user = {props.auth.user}
+            user = {user}
             onHide={() => setModalShow(false)}/>
         <Table striped bordered hover>
             <thead>
             <tr>
                 <th>Name</th>
                 <th>Style</th>
+                <th>Delete</th>
             </tr>
             </thead>
             <tbody>
@@ -49,6 +56,9 @@ const RecipeManager = (props) => {
                 return <tr key={index}>
                         <td>{value.name}</td>
                         <td>{value.style}</td>
+                    <td><Button />
+                        {value._id}
+                    </td>
                     </tr>
             })}
 
@@ -62,7 +72,7 @@ const NewRecipeModal = (props) => {
     const [styleField, setStyleField] = useState('');
 
     const newRecipe = () => {
-        let data = {
+        const data = {
             name: nameField,
             style: styleField,
             owner: props.user.id
