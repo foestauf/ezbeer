@@ -1,11 +1,11 @@
-import React, {Component} from "react";
+import React from "react";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import {Provider} from "react-redux";
 import setAuthToken from "./utils/setAuthToken";
 import "./css/App.scss"
 import about from "./components/about";
-import recipes from "./components/recipes";
+import recipes from "./components/RecipeProfile";
 import {logoutUser, setCurrentUser} from "./actions/authActions";
 import store from "./store";
 import Landing from "./components/layout/landing";
@@ -15,7 +15,8 @@ import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 import Navigation from "./components/layout/navbar";
 import YeastCalculator from "./components/yeastCalc";
-import RecipeManager from "./recipeManager";
+import RecipeList from "./components/RecipeList";
+
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
     // Set auth token header auth
@@ -35,8 +36,7 @@ if (localStorage.jwtToken) {
     }
 }
 
-class App extends Component {
-    render() {
+const App = () => {
         return (
             <Provider store={store}>
                 <Router>
@@ -50,13 +50,12 @@ class App extends Component {
                         <Switch>
                             <PrivateRoute exact path="/dashboard" component={Dashboard}/>
                             <PrivateRoute exact path="/recipes" component={recipes}/>
-                            <PrivateRoute exact path="/recipemanager" component={RecipeManager}/>
+                            <PrivateRoute exact path="/recipelist" component={RecipeList}/>
                         </Switch>
                     </div>
                 </Router>
             </Provider>
         );
-    }
 }
 
 export default App;

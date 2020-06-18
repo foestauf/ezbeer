@@ -1,5 +1,6 @@
 import React from "react";
 import {Helmet} from "react-helmet";
+import { useSelector } from 'react-redux';
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -13,6 +14,8 @@ import Button from "react-bootstrap/Button";
 
 
 export default function () {
+    const recipe = useSelector(state => state.recipe)
+    console.log(recipe)
     return(
         <div>
             <Helmet>
@@ -26,7 +29,11 @@ export default function () {
                                 <InputGroup.Prepend>
                                     <InputGroup.Text>Name</InputGroup.Text>
                                 </InputGroup.Prepend>
-                                <FormControl readOnly size="sm" placeholder="BEER NAME"/>
+                                <FormControl readOnly size="sm" placeholder={recipe.name} />
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text>Style</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl readOnly size="sm" placeholder={recipe.style} />
                             </InputGroup>
 
                         </Row>
