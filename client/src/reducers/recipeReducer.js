@@ -1,20 +1,22 @@
 import { SET_CURRENT_RECIPE } from '../actions/types';
 
 const initialState = {
-  recipe: ''
-}
+  recipe: '',
+};
 
 const recipeReducer = (state = initialState, action) => {
-  switch(action.type){
+  switch (action.type) {
     case SET_CURRENT_RECIPE:
       return {
         ...state,
-        recipe: action.payload._id,
+        id: action.payload._id,
         style: action.payload.style,
-        name: action.payload.name
+        name: action.payload.name,
+        ingredients: action.payload.ingredients,
       };
-    default: return state;
+    default:
+      return state;
   }
-}
+};
 
-export default recipeReducer
+export default recipeReducer;

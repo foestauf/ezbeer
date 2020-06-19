@@ -11,10 +11,17 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
+import delDocument from '../utils/delDoucment';
 
 export default function () {
   const recipe = useSelector((state) => state.recipe);
-  console.log(recipe);
+  const delRecipe = (recipeId) => {
+    console.log(`Deleting ${recipeId}`);
+    delDocument('/api/recipes/delete-recipe', { data: recipeId }).then((res) => {
+      console.log(res);
+    });
+  };
+
   return (
     <div>
       <Helmet>
@@ -100,6 +107,15 @@ export default function () {
 
               <Tab eventKey="Water Calc" title="Water Calc">
                 Wut
+              </Tab>
+              <Tab title="Settings" eventKey="Settings">
+                Settings
+                <div>
+                  DANGER ZONE
+                  <Button variant="danger" onClick={() => delRecipe(recipe.id)}>
+                    DELETE
+                  </Button>
+                </div>
               </Tab>
             </Tabs>
           </Col>
