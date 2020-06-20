@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
-import { LinkContainer } from 'react-router-bootstrap';
-import Nav from 'react-bootstrap/Nav';
 import { logoutUser } from '../../actions/authActions';
 
 class Dashboard extends Component {
@@ -40,11 +38,6 @@ class Dashboard extends Component {
               Logout
             </Button>
           </div>
-          <LinkContainer to="/recipelist">
-            <Nav.Link>
-              <Button>Recipe Manager</Button>
-            </Nav.Link>
-          </LinkContainer>
         </div>
       </div>
     );
