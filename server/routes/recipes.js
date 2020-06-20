@@ -31,11 +31,12 @@ router.post('/new', (req, res) => {
 
 router.delete('/delete-recipe', (req, res) => {
   console.log(req.body.data);
+  console.log(req.body);
   const id = { _id: req.body.data };
   Recipe.deleteOne(id, function (err, obj) {
     if (err) throw err;
     console.log('1 document deleted');
-  });
+  }).then(res.status(200).json({ complete: 'we did it' }));
 });
 
 module.exports = router;

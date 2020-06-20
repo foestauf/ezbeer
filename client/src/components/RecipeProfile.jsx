@@ -1,6 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -11,14 +12,21 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
-import delDocument from '../utils/delDoucment';
+// import delDocument from '../utils/delDoucment';
+
+const axios = require('axios');
 
 export default function () {
+  const history = useHistory();
   const recipe = useSelector((state) => state.recipe);
-  const delRecipe = (recipeId) => {
+  const delRecipe = async (recipeId) => {
     console.log(`Deleting ${recipeId}`);
-    delDocument('/api/recipes/delete-recipe', { data: recipeId }).then((res) => {
+    await axios.delete('/api/recipes/delete-recipe', { data: { data: recipe.id } }).then((res) => {
       console.log(res);
+      if (res.status === 200) {
+        console.log('Routing back to dashboard');
+        history.push('/dashboard');
+      }
     });
   };
 
