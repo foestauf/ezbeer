@@ -36,7 +36,9 @@ router.delete('/delete-recipe', (req, res) => {
   Recipe.deleteOne(id, function (err, obj) {
     if (err) throw err;
     console.log('1 document deleted');
-  }).then(res.status(200).json({ complete: 'we did it' }));
+  })
+    .then(res.status(200).json({ complete: 'we did it' }))
+    .catch((err) => console.log(err));
 });
 
 module.exports = router;

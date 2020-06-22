@@ -12,12 +12,14 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
-const axios = require('axios');
+// const axios = require('axios').default;
 
 export default function () {
   const history = useHistory();
   const recipe = useSelector((state) => state.recipe);
+  console.log(recipe);
   const delRecipe = async (recipeId) => {
     console.log(`Deleting ${recipeId}`);
     await axios.delete('/api/recipes/delete-recipe', { data: { data: recipe.id } }).then((res) => {
@@ -28,6 +30,14 @@ export default function () {
       }
     });
   };
+
+  // const saveRecipe = async (recipeId) => {
+  //   console.log(`Saving ${recipeId}`);
+  //   await axios.put('/api/recipes/update-recipe', recipe)
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  // }
 
   return (
     <div>
@@ -149,7 +159,7 @@ export default function () {
               Delete
             </Button>
             <Button size="sm" block>
-              I dont know
+              Save
             </Button>
           </Col>
         </Row>

@@ -1,8 +1,6 @@
 import { SET_CURRENT_RECIPE } from '../actions/types';
 
-const initialState = {
-  recipe: '',
-};
+const initialState = {};
 
 const recipeReducer = (state = initialState, action) => {
   switch (action.type) {
