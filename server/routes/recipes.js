@@ -41,4 +41,21 @@ router.delete('/delete-recipe', (req, res) => {
     .catch((err) => console.log(err));
 });
 
+router.put('/update-recipe', (req, res) => {
+  console.log(req.body.id);
+  Recipe.updateOne(
+    { _id: req.body.id },
+    {
+      $set: {
+        style: req.body.style,
+        name: req.body.name,
+        ingredients: req.body.ingredients,
+      },
+      $currentDate: { lastModified: true },
+    },
+  )
+    .then(res.status(200).json({ complete: 'we did it' }))
+    .catch((err) => console.log(err));
+});
+
 module.exports = router;

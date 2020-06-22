@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -13,8 +13,6 @@ import FormControl from 'react-bootstrap/FormControl';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-
-// const axios = require('axios').default;
 
 export default function () {
   const history = useHistory();
@@ -31,13 +29,14 @@ export default function () {
     });
   };
 
-  // const saveRecipe = async (recipeId) => {
-  //   console.log(`Saving ${recipeId}`);
-  //   await axios.put('/api/recipes/update-recipe', recipe)
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  // }
+  const saveRecipe = async (recipeId) => {
+    console.log(`Saving ${recipeId}`);
+    await axios.put('/api/recipes/update-recipe', recipe).then((res) => {
+      console.log(res);
+    });
+  };
+
+  const changeName = useDispatch();
 
   return (
     <div>
@@ -79,6 +78,12 @@ export default function () {
                     placeholder="Beer Name"
                     type="text"
                     aria-label="BeerName"
+                    onChange={(e) =>
+                      changeName({
+                        type: 'SET_RECIPE_NAME',
+                        payload: { name: e.target.value },
+                      })
+                    }
                   />
                   <InputGroup.Prepend>
                     <InputGroup.Text>Brewer</InputGroup.Text>
@@ -158,7 +163,7 @@ export default function () {
             <Button size="sm" block>
               Delete
             </Button>
-            <Button size="sm" block>
+            <Button size="sm" block onClick={() => saveRecipe(recipe.id)}>
               Save
             </Button>
           </Col>
