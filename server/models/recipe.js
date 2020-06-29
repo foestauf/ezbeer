@@ -24,6 +24,12 @@ const RecipeSchema = new Schema({
     type: '',
     required: false,
   },
+  boilTime: {
+    type: Number,
+  },
+  batchSize: {
+    type: Number,
+  },
 });
 const Recipe = mongoose.model('recipes', RecipeSchema);
 

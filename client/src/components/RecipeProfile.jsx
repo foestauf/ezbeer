@@ -14,12 +14,14 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { setRecipe } from '../actions/recipeActions';
+import Toaster from './toast';
 
 export default function () {
   const dispatch = useDispatch();
   const history = useHistory();
   const recipe = useSelector((state) => state.recipe);
   const [prevState, setPrevState] = useState({ _id: recipe._id });
+  const [toastShow, setToastShow] = useState(false);
 
   const changeHandler = (event) => {
     event.persist();
@@ -41,11 +43,13 @@ export default function () {
     });
   };
 
-  const saveRecipe = async (recipeId) => {
-    console.log(`Saving ${recipeId}`);
+  const saveRecipe = async () => {
     await axios.put('/api/recipes/update-recipe', prevState).then((res) => {
-      console.log(res);
-      dispatch(setRecipe(prevState));
+      if (res.status === 200) {
+        dispatch(setRecipe(prevState));
+        console.log('We did it');
+        setToastShow(true);
+      }
     });
   };
 
@@ -107,11 +111,23 @@ export default function () {
                   <InputGroup.Prepend>
                     <InputGroup.Text>Batch Size</InputGroup.Text>
                   </InputGroup.Prepend>
-                  <FormControl placeholder="Size in Gallons" aria-label="BatchSize" />
+                  <FormControl
+                    name="batchSize"
+                    defaultValue={recipe.batchSize}
+                    onChange={(e) => changeHandler(e)}
+                    placeholder="Size in Gallons"
+                    aria-label="BatchSize"
+                  />
                   <InputGroup.Prepend>
                     <InputGroup.Text>Boil Time</InputGroup.Text>
                   </InputGroup.Prepend>
-                  <FormControl placeholder="60" aria-label="BoilTime" />
+                  <FormControl
+                    name="boilTime"
+                    defaultValue={recipe.boilTime}
+                    onChange={(e) => changeHandler(e)}
+                    placeholder="Boil Time"
+                    aria-label="BoilTime"
+                  />
                   <InputGroup.Prepend>
                     <InputGroup.Text>Efficiency</InputGroup.Text>
                     <FormControl placeholder="80" aria-label="efficiency" />
@@ -185,6 +201,7 @@ export default function () {
           <Col>Recipe Infos, ABV, IBU, total weight</Col>
         </Row>
       </Container>
+      <Toaster show={toastShow} recipeName={recipe.name} onHide={() => setToastShow(false)} />
     </div>
   );
 }
