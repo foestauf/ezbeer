@@ -75,6 +75,7 @@ export default function () {
                   </InputGroup.Prepend>
                   <FormControl
                     defaultValue={recipe.name}
+                    name="name"
                     placeholder="Beer Name"
                     type="text"
                     aria-label="BeerName"
@@ -88,7 +89,11 @@ export default function () {
                   <InputGroup.Prepend>
                     <InputGroup.Text>Brewer</InputGroup.Text>
                   </InputGroup.Prepend>
-                  <FormControl placeholder="Brewer Name" aria-label="BrewerName" />
+                  <FormControl
+                    name="brewerName"
+                    placeholder={recipe.brewer}
+                    aria-label="BrewerName"
+                  />
                 </InputGroup>
                 <InputGroup>
                   <InputGroup.Prepend>

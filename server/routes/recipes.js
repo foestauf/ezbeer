@@ -42,14 +42,13 @@ router.delete('/delete-recipe', (req, res) => {
 });
 
 router.put('/update-recipe', (req, res) => {
-  console.log(req.body.id);
+  // Update fails if lastModified property exists so lets delete it
+  delete req.body.lastModified;
   Recipe.updateOne(
-    { _id: req.body.id },
+    { _id: req.body._id },
     {
       $set: {
-        style: req.body.style,
-        name: req.body.name,
-        ingredients: req.body.ingredients,
+        ...req.body,
       },
       $currentDate: { lastModified: true },
     },
