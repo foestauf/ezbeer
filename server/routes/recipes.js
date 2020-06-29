@@ -42,8 +42,7 @@ router.delete('/delete-recipe', (req, res) => {
 });
 
 router.put('/update-recipe', (req, res) => {
-  // Update fails if lastModified property exists so lets delete it
-  delete req.body.lastModified;
+  console.log(req.body);
   Recipe.updateOne(
     { _id: req.body._id },
     {
@@ -52,6 +51,7 @@ router.put('/update-recipe', (req, res) => {
       },
       $currentDate: { lastModified: true },
     },
+    { upsert: true },
   )
     .then(res.status(200).json({ complete: 'we did it' }))
     .catch((err) => console.log(err));

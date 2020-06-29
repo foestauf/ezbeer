@@ -7,6 +7,9 @@ const RecipeSchema = new Schema({
     type: String,
     required: true,
   },
+  brewerName: {
+    type: String,
+  },
   style: {
     type: String,
   },

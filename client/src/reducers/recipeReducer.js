@@ -6,7 +6,7 @@ const recipeReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_CURRENT_RECIPE:
       return {
-        // ...state,
+        ...state,
         ...action.payload,
       };
     case SET_RECIPE_NAME:

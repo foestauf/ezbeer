@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -13,11 +13,23 @@ import FormControl from 'react-bootstrap/FormControl';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { setRecipe } from '../actions/recipeActions';
 
 export default function () {
+  const dispatch = useDispatch();
   const history = useHistory();
   const recipe = useSelector((state) => state.recipe);
-  console.log(recipe);
+  const [prevState, setPrevState] = useState({ _id: recipe._id });
+
+  const changeHandler = (event) => {
+    event.persist();
+    const { value } = event.target;
+    setPrevState((prevState1) => ({
+      ...prevState1,
+      [event.target.name]: value,
+    }));
+  };
+
   const delRecipe = async (recipeId) => {
     console.log(`Deleting ${recipeId}`);
     await axios.delete('/api/recipes/delete-recipe', { data: { data: recipe.id } }).then((res) => {
@@ -31,12 +43,11 @@ export default function () {
 
   const saveRecipe = async (recipeId) => {
     console.log(`Saving ${recipeId}`);
-    await axios.put('/api/recipes/update-recipe', recipe).then((res) => {
+    await axios.put('/api/recipes/update-recipe', prevState).then((res) => {
       console.log(res);
+      dispatch(setRecipe(prevState));
     });
   };
-
-  const changeName = useDispatch();
 
   return (
     <div>
@@ -79,20 +90,17 @@ export default function () {
                     placeholder="Beer Name"
                     type="text"
                     aria-label="BeerName"
-                    onChange={(e) =>
-                      changeName({
-                        type: 'SET_RECIPE_NAME',
-                        payload: { name: e.target.value },
-                      })
-                    }
+                    onChange={(e) => changeHandler(e)}
                   />
                   <InputGroup.Prepend>
                     <InputGroup.Text>Brewer</InputGroup.Text>
                   </InputGroup.Prepend>
                   <FormControl
                     name="brewerName"
-                    placeholder={recipe.brewer}
+                    defaultValue={recipe.brewerName}
+                    placeholder="Brewer Name"
                     aria-label="BrewerName"
+                    onChange={(e) => changeHandler(e)}
                   />
                 </InputGroup>
                 <InputGroup>
