@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
+import Modal from 'react-bootstrap/Modal';
 import '../css/recipes.scss';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
@@ -22,6 +23,7 @@ export default function () {
   const recipe = useSelector((state) => state.recipe);
   const [prevState, setPrevState] = useState({ _id: recipe._id });
   const [toastShow, setToastShow] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
 
   const changeHandler = (event) => {
     event.persist();
@@ -49,6 +51,7 @@ export default function () {
         dispatch(setRecipe(prevState));
         console.log('We did it');
         setToastShow(true);
+        setPrevState({ _id: recipe._id });
       }
     });
   };
@@ -59,6 +62,13 @@ export default function () {
         <title>EZ Beer: Recipe Manager</title>
       </Helmet>
       <Container fluid>
+        <NewMaterialModal
+          show={modalShow}
+          recipe={recipe}
+          backdrop="static"
+          onHide={() => setModalShow(false)}
+        />
+
         <Row>
           <Col className="statusBar">
             <Row>
@@ -130,7 +140,13 @@ export default function () {
                   />
                   <InputGroup.Prepend>
                     <InputGroup.Text>Efficiency</InputGroup.Text>
-                    <FormControl placeholder="80" aria-label="efficiency" />
+                    <FormControl
+                      name="efficiency"
+                      defaultValue={recipe.efficiency}
+                      onChange={(e) => changeHandler(e)}
+                      placeholder="80"
+                      aria-label="efficiency"
+                    />
                   </InputGroup.Prepend>
                   <InputGroup.Append>
                     <InputGroup.Text>%</InputGroup.Text>
@@ -171,7 +187,7 @@ export default function () {
             </Tabs>
           </Col>
           <Col>
-            <Button size="sm" block>
+            <Button size="sm" block onClick={() => setModalShow(true)}>
               Add Grain
             </Button>
             <Button size="sm" block>
@@ -205,3 +221,46 @@ export default function () {
     </div>
   );
 }
+
+const NewMaterialModal = (props) => {
+  const [newMaterial, setNewMaterial] = useState();
+  const { onHide } = props;
+  console.log(newMaterial);
+  const changeHandler = (event) => {
+    event.persist();
+    const { value } = event.target;
+    setNewMaterial((prevState1) => ({
+      ...prevState1,
+      [event.target.name]: value,
+    }));
+  };
+
+  return (
+    <Modal animation {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">New Recipe</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <InputGroup>
+          <InputGroup.Prepend>
+            <InputGroup.Text>Name</InputGroup.Text>
+          </InputGroup.Prepend>
+          <FormControl
+            placeholder="Name"
+            name="name"
+            aria-label="Beername"
+            onChange={(e) => changeHandler(e)}
+          />
+          <InputGroup.Prepend>
+            <InputGroup.Text>Style</InputGroup.Text>
+          </InputGroup.Prepend>
+          <FormControl placeholder="Quanity" name="quanity" onChange={(e) => changeHandler(e)} />
+        </InputGroup>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={onHide}>Close</Button>
+        <Button>Save</Button>
+      </Modal.Footer>
+    </Modal>
+  );
+};

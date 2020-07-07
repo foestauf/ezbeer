@@ -30,6 +30,9 @@ const RecipeSchema = new Schema({
   batchSize: {
     type: Number,
   },
+  efficiency: {
+    type: String,
+  },
 });
 const Recipe = mongoose.model('recipes', RecipeSchema);
 
