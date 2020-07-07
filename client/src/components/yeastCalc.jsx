@@ -45,7 +45,7 @@ const YeastCalculator = () => {
     const fermVolML = state.fermVol * 31 * 3785.41;
     const cellsPerML = cellsCounted * squares * state.dillution * 10 ** 4;
     const cellConcPerMLPerP = state.cellConc * 10 ** 6;
-    const totalCellsPitch = state.fermVol * 117180 * state.gravity * 10 ** 5;
+    const totalCellsPitch = state.fermVol * 117180 * state.gravity * 10 ** 6;
     const volNeededML = totalCellsPitch / cellsPerML;
     const volNeededLiter = volNeededML / 1000;
     const volNeededGal = volNeededLiter * 0.264172;
