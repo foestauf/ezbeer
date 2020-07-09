@@ -57,4 +57,19 @@ router.put('/update-recipe', (req, res) => {
     .catch((err) => console.log(err));
 });
 
+router.put('/add-ingredient', (req, res) => {
+  const id = req.body._id;
+  delete req.body._id;
+  Recipe.updateOne(
+    { _id: id },
+    {
+      $push: {
+        ingredients: { ...req.body },
+      },
+    },
+  )
+    .then(res.status(200).json({ complete: 'we did it' }))
+    .catch((err) => console.log(err));
+});
+
 module.exports = router;

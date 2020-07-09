@@ -11,7 +11,6 @@ import Modal from 'react-bootstrap/Modal';
 import '../css/recipes.scss';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
-import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { setRecipe } from '../actions/recipeActions';
@@ -67,6 +66,7 @@ export default function () {
           recipe={recipe}
           backdrop="static"
           onHide={() => setModalShow(false)}
+          toast={() => setToastShow(true)}
         />
 
         <Row>
@@ -153,19 +153,25 @@ export default function () {
                   </InputGroup.Append>
                 </InputGroup>
                 <div id="ingredients">
-                  <Table striped bordered hover>
-                    <thead>
-                      <tr>
-                        <th>Amount</th>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>%</th>
-                        <th>IBU</th>
-                        <th>Inventory</th>
-                        <th>Cost</th>
-                      </tr>
-                    </thead>
-                  </Table>
+                  <Container>
+                    <Row>
+                      <Col>Amount</Col>
+                      <Col>Name</Col>
+                      <Col>Type</Col>
+                      <Col>%</Col>
+                      <Col>IBU</Col>
+                      <Col>Inventory</Col>
+                      <Col>Cost</Col>
+                    </Row>
+                    {recipe.ingredients.map((value, index) => {
+                      return (
+                        <Row key={index}>
+                          <Col>{value.name}</Col>
+                          <Col>{value.quantity}</Col>
+                        </Row>
+                      );
+                    })}
+                  </Container>
                 </div>
               </Tab>
               <Tab eventKey="Mash" title="Mash">
@@ -223,9 +229,9 @@ export default function () {
 }
 
 const NewMaterialModal = (props) => {
-  const [newMaterial, setNewMaterial] = useState();
+  const recipe = useSelector((state) => state.recipe);
+  const [newMaterial, setNewMaterial] = useState({ _id: recipe._id });
   const { onHide } = props;
-  console.log(newMaterial);
   const changeHandler = (event) => {
     event.persist();
     const { value } = event.target;
@@ -233,6 +239,17 @@ const NewMaterialModal = (props) => {
       ...prevState1,
       [event.target.name]: value,
     }));
+  };
+
+  const saveIngredient = async () => {
+    await axios.put('/api/recipes/add-ingredient', newMaterial).then((res) => {
+      if (res.status === 200) {
+        console.log('Look ma we did it');
+        props.onHide();
+        props.toast();
+        setNewMaterial({ _id: recipe._id });
+      }
+    });
   };
 
   return (
@@ -254,12 +271,12 @@ const NewMaterialModal = (props) => {
           <InputGroup.Prepend>
             <InputGroup.Text>Style</InputGroup.Text>
           </InputGroup.Prepend>
-          <FormControl placeholder="Quanity" name="quanity" onChange={(e) => changeHandler(e)} />
+          <FormControl placeholder="Quantity" name="quantity" onChange={(e) => changeHandler(e)} />
         </InputGroup>
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={onHide}>Close</Button>
-        <Button>Save</Button>
+        <Button onClick={saveIngredient}>Save</Button>
       </Modal.Footer>
     </Modal>
   );

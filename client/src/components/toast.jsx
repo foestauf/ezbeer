@@ -4,7 +4,6 @@ import Col from 'react-bootstrap/Col';
 import Toast from 'react-bootstrap/Toast';
 
 const Toaster = (props) => {
-  console.log(props);
   const { onHide, recipeName, show } = props;
   return (
     <div
