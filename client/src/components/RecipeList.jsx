@@ -55,7 +55,7 @@ const RecipeList = (props) => {
           <tr>
             <th>Name</th>
             <th>Style</th>
-            <th>Delete</th>
+            <th>View</th>
           </tr>
         </thead>
         <tbody>

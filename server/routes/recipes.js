@@ -36,7 +36,40 @@ router.delete('/delete-recipe', (req, res) => {
   Recipe.deleteOne(id, function (err, obj) {
     if (err) throw err;
     console.log('1 document deleted');
-  }).then(res.status(200).json({ complete: 'we did it' }));
+  })
+    .then(res.status(200).json({ complete: 'we did it' }))
+    .catch((err) => console.log(err));
+});
+
+router.put('/update-recipe', (req, res) => {
+  console.log(req.body);
+  Recipe.updateOne(
+    { _id: req.body._id },
+    {
+      $set: {
+        ...req.body,
+      },
+      $currentDate: { lastModified: true },
+    },
+    { upsert: true },
+  )
+    .then(res.status(200).json({ complete: 'we did it' }))
+    .catch((err) => console.log(err));
+});
+
+router.put('/add-ingredient', (req, res) => {
+  const id = req.body._id;
+  delete req.body._id;
+  Recipe.updateOne(
+    { _id: id },
+    {
+      $push: {
+        ingredients: { ...req.body },
+      },
+    },
+  )
+    .then(res.status(200).json({ complete: 'we did it' }))
+    .catch((err) => console.log(err));
 });
 
 module.exports = router;

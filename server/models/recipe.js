@@ -7,6 +7,9 @@ const RecipeSchema = new Schema({
     type: String,
     required: true,
   },
+  brewerName: {
+    type: String,
+  },
   style: {
     type: String,
   },
@@ -17,6 +20,20 @@ const RecipeSchema = new Schema({
     type: String,
     required: true,
   },
+  lastModified: {
+    type: '',
+    required: false,
+  },
+  boilTime: {
+    type: Number,
+  },
+  batchSize: {
+    type: Number,
+  },
+  efficiency: {
+    type: String,
+  },
 });
+const Recipe = mongoose.model('recipes', RecipeSchema);
 
-module.exports = Recipe = mongoose.model('recipes', RecipeSchema);
+module.exports = Recipe;

@@ -11,7 +11,6 @@ const Navigation = () => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav variant="pills" defaultActiveKey="/" className="mr-auto">
           <NavButton to="/" title="Home" />
-          <NavButton to="/recipes" title="Recipes" />
           <NavButton to="/yeastcalc" title="Yeast Calculator" />
           <NavButton to="/dashboard" title="Dashboard" />
           <NavButton to="/recipelist" title="Recipe Manager" />
