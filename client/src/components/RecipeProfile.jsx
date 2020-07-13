@@ -13,7 +13,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-import { setRecipe } from '../actions/recipeActions';
+import { addIngredient, setRecipe } from '../actions/recipeActions';
 import Toaster from './toast';
 
 export default function () {
@@ -232,6 +232,8 @@ const NewMaterialModal = (props) => {
   const recipe = useSelector((state) => state.recipe);
   const [newMaterial, setNewMaterial] = useState({ _id: recipe._id });
   const { onHide } = props;
+  const dispatch = useDispatch();
+
   const changeHandler = (event) => {
     event.persist();
     const { value } = event.target;
@@ -244,9 +246,11 @@ const NewMaterialModal = (props) => {
   const saveIngredient = async () => {
     await axios.put('/api/recipes/add-ingredient', newMaterial).then((res) => {
       if (res.status === 200) {
-        console.log('Look ma we did it');
+        console.log('Ingredient addition successful');
         props.onHide();
         props.toast();
+        delete newMaterial._id;
+        dispatch(addIngredient(newMaterial));
         setNewMaterial({ _id: recipe._id });
       }
     });

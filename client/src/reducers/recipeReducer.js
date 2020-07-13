@@ -1,4 +1,4 @@
-import { SET_CURRENT_RECIPE, SET_RECIPE_NAME } from '../actions/types';
+import { SET_CURRENT_RECIPE, SET_RECIPE_NAME, ADD_INGREDIENT } from '../actions/types';
 
 const initialState = {};
 
@@ -13,6 +13,11 @@ const recipeReducer = (state = initialState, action) => {
       return {
         ...state,
         name: action.payload.name,
+      };
+    case ADD_INGREDIENT:
+      return {
+        ...state,
+        ingredients: [...state.ingredients, action.payload],
       };
     default:
       return state;
