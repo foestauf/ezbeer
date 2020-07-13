@@ -166,8 +166,14 @@ export default function () {
                     {recipe.ingredients.map((value, index) => {
                       return (
                         <Row key={index}>
-                          <Col>{value.name}</Col>
                           <Col>{value.quantity}</Col>
+
+                          <Col>{value.name}</Col>
+                          <Col />
+                          <Col />
+                          <Col />
+                          <Col />
+                          <Col />
                         </Row>
                       );
                     })}
