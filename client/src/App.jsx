@@ -8,7 +8,7 @@ import './css/App.scss';
 import about from './components/about';
 import recipes from './components/RecipeProfile';
 import { logoutUser, setCurrentUser } from './actions/authActions';
-import store from './store';
+import store from './store/store';
 import Landing from './components/layout/landing';
 import Register from './components/auth/register';
 import Login from './components/auth/login';
