@@ -35,11 +35,11 @@ export default function () {
 
   const delRecipe = async (recipeId) => {
     console.log(`Deleting ${recipeId}`);
-    await axios.delete('/api/recipes/delete-recipe', { data: { data: recipe.id } }).then((res) => {
+    await axios.delete('/api/recipes/delete-recipe', { data: { data: recipeId } }).then((res) => {
       console.log(res);
       if (res.status === 200) {
-        console.log('Routing back to dashboard');
-        history.push('/dashboard');
+        console.log('Routing back to recipe list');
+        history.push('/recipelist');
       }
     });
   };
@@ -181,7 +181,7 @@ export default function () {
                 </div>
               </Tab>
               <Tab eventKey="Mash" title="Mash">
-                Some homie Info
+                Some Info
               </Tab>
 
               <Tab eventKey="Water Calc" title="Water Calc">
@@ -191,7 +191,7 @@ export default function () {
                 Settings
                 <div>
                   DANGER ZONE
-                  <Button variant="danger" onClick={() => delRecipe(recipe.id)}>
+                  <Button variant="danger" onClick={() => delRecipe(recipe._id)}>
                     DELETE
                   </Button>
                 </div>
