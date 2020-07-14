@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -165,16 +165,13 @@ export default function () {
                     </Row>
                     {recipe.ingredients.map((value, index) => {
                       return (
-                        <Row key={index}>
-                          <Col>{value.quantity}</Col>
-
-                          <Col>{value.name}</Col>
-                          <Col />
-                          <Col />
-                          <Col />
-                          <Col />
-                          <Col />
-                        </Row>
+                        <IngredientView
+                          key={index}
+                          index={index}
+                          name={value.name}
+                          quantity={value.quantity}
+                          type={value.type}
+                        />
                       );
                     })}
                   </Container>
@@ -250,13 +247,14 @@ const NewMaterialModal = (props) => {
   };
 
   const saveIngredient = async () => {
-    await axios.put('/api/recipes/add-ingredient', newMaterial).then((res) => {
+    const ingredientObj = newMaterial;
+    await axios.put('/api/recipes/add-ingredient', ingredientObj).then((res) => {
       if (res.status === 200) {
         console.log('Ingredient addition successful');
         props.onHide();
         props.toast();
-        delete newMaterial._id;
-        dispatch(addIngredient(newMaterial));
+        delete ingredientObj._id;
+        dispatch(addIngredient(ingredientObj));
         setNewMaterial({ _id: recipe._id });
       }
     });
@@ -289,5 +287,21 @@ const NewMaterialModal = (props) => {
         <Button onClick={saveIngredient}>Save</Button>
       </Modal.Footer>
     </Modal>
+  );
+};
+
+const IngredientView = (props) => {
+  const { quantity, name, type } = props;
+  return (
+    <Row>
+      <Col>{quantity}</Col>
+
+      <Col>{name}</Col>
+      <Col>{type}</Col>
+      <Col />
+      <Col />
+      <Col />
+      <Col />
+    </Row>
   );
 };
