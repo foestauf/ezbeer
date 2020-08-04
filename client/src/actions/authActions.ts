@@ -4,9 +4,10 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from '../utils/setAuthToken';
 // eslint-disable-next-line import/extensions
 import { AuthActionTypes, Decode, GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from './types';
+import { UserData } from '../components/auth/types';
 
 // Register User
-export const registerUser = (userData: any, history: any) => (dispatch: any) => {
+export const registerUser = (userData: UserData, history: any) => (dispatch: any): void => {
   axios
     .post('/api/users/register', userData, { headers: { 'Content-Type': 'application/json' } })
     .then(() => history.push('/login')) // re-direct to login on successful register
@@ -18,7 +19,7 @@ export const registerUser = (userData: any, history: any) => (dispatch: any) => 
     );
 };
 // Login - get user token
-export const loginUser = (userData: any) => (dispatch: any) => {
+export const loginUser = (userData: UserData) => (dispatch: any): void => {
   axios
     .post('/api/users/login', userData, { headers: { 'Content-Type': 'application/json' } })
     .then((res) => {

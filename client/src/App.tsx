@@ -17,6 +17,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import Navigation from './components/layout/navbar';
 import YeastCalculator from './components/yeastCalc';
 import RecipeList from './components/RecipeList';
+import { Decode } from './actions/types';
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -24,7 +25,7 @@ if (localStorage.jwtToken) {
   const token = localStorage.jwtToken;
   setAuthToken(token);
   // Decode token and get user info and exp
-  const decoded = jwt_decode(token);
+  const decoded: Decode = jwt_decode(token);
   // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
   // Check for expired token

@@ -9,7 +9,8 @@ export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export interface Decode {
   auth: object,
   errors: object,
-  recipe: object
+  recipe: object,
+  exp?: number
 }
 
 interface SetCurrentUser {
