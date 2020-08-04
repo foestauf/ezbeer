@@ -3,7 +3,7 @@ export const loadState = () => {
     const serializedState = sessionStorage.getItem('state');
 
     if (serializedState === null) {
-      return undefined;
+      return {};
     }
     return JSON.parse(serializedState);
   } catch (error) {
