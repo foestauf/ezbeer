@@ -11,7 +11,8 @@ export const loadState = () => {
   }
 };
 
-export const saveState = (state) => {
+export const saveState = (state: object) => {
+  console.log(state);
   try {
     const serializedState = JSON.stringify(state);
     sessionStorage.setItem('state', serializedState);
