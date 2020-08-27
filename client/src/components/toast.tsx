@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Toast from 'react-bootstrap/Toast';
 
-const Toaster = (props) => {
+const Toaster = (props: any): ReactElement => {
   const { onHide, recipeName, show } = props;
   return (
     <div

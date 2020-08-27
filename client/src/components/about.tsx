@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Helmet } from 'react-helmet';
 
-export default function () {
+export default function (): ReactElement {
   return (
     <div>
       <Helmet>

@@ -57,7 +57,7 @@ export const setUserLoading = (): AuthActionTypes => {
   };
 };
 // Log user out
-export const logoutUser = () => (dispatch: any) => {
+export const logoutUser = () => (dispatch: any): void => {
   // Remove token from local storage
   localStorage.removeItem('jwtToken');
   // Remove auth header for future requests

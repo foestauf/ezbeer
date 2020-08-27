@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { registerUser } from "../../actions/authActions";
 import classnames from "classnames";
+import { registerUser } from "../../actions/authActions";
 
 class Register extends Component {
     constructor() {
@@ -16,12 +16,14 @@ class Register extends Component {
             errors: {}
         };
     }
+
     componentDidMount() {
         // If logged in and user navigates to Register page, should redirect them to dashboard
         if (this.props.auth.isAuthenticated) {
             this.props.history.push("/dashboard");
         }
     }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.errors) {
             this.setState({
@@ -29,9 +31,11 @@ class Register extends Component {
             });
         }
     }
+
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
+
     onSubmit = e => {
         e.preventDefault();
         const newUser = {
@@ -42,6 +46,7 @@ class Register extends Component {
         };
         this.props.registerUser(newUser, this.props.history);
     };
+
     render() {
         const { errors } = this.state;
         return (
