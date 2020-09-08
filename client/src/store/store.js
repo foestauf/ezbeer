@@ -4,6 +4,7 @@ import rootReducer from '../reducers';
 import { loadState, saveState } from './sessionStorage';
 
 const initialState = loadState();
+delete initialState.errors;
 const middleware = [thunk];
 const store = createStore(
   rootReducer,
