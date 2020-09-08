@@ -1,4 +1,11 @@
-import { SET_CURRENT_RECIPE, SET_RECIPE_NAME, ADD_INGREDIENT } from '../actions/types';
+import update from 'immutability-helper';
+
+import {
+  SET_CURRENT_RECIPE,
+  SET_RECIPE_NAME,
+  ADD_INGREDIENT,
+  UPDATE_INGREDIENT,
+} from '../actions/types';
 
 const initialState = {};
 
@@ -19,9 +26,18 @@ const recipeReducer = (state = initialState, action) => {
         ...state,
         ingredients: [...state.ingredients, action.payload],
       };
+    case UPDATE_INGREDIENT:
+      return update(state, {
+        arrObj: {
+          [action.payload.index]: {
+            ingredients: {
+              $set: action.payload.ingredients,
+            },
+          },
+        },
+      });
     default:
       return state;
   }
 };
-
 export default recipeReducer;

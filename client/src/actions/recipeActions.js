@@ -1,4 +1,4 @@
-import { ADD_INGREDIENT, SET_CURRENT_RECIPE } from './types';
+import { ADD_INGREDIENT, SET_CURRENT_RECIPE, UPDATE_INGREDIENT } from './types';
 
 export const setRecipe = (recipeId) => {
   return {
@@ -10,6 +10,13 @@ export const setRecipe = (recipeId) => {
 export const addIngredient = (payload) => {
   return {
     type: ADD_INGREDIENT,
+    payload,
+  };
+};
+
+export const updateIngredient = (payload) => {
+  return {
+    type: UPDATE_INGREDIENT,
     payload,
   };
 };
