@@ -11,8 +11,8 @@
     "browser": true,
     "jest": true
   },
-  "extends": ["react-app","airbnb", "prettier", "prettier/react"],
-  "plugins": ["react-hooks", "jsx-a11y"],
+  "extends": ["plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended","react-app","airbnb", "prettier", "prettier/react"],
+  "plugins": ["@typescript-eslint","react-hooks", "jsx-a11y"],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
@@ -27,9 +27,20 @@
     "no-underscore-dangle": ["error", {"allow": ["_id"]}],
     "import/prefer-default-export": 0,
     "import/no-cycle": 0,
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
     "react/no-array-index-key": 0,
     "react/forbid-prop-types": 0,
     "react/prop-types": [2, { "skipUndeclared": true }],
+    "react/jsx-filename-extension": [1, {"extensions": [".tsx", ".jsx"]}],
     "react/jsx-fragments": [2, "element"],
     "react/state-in-constructor": 0,
     "react/jsx-props-no-spreading": 0,
@@ -39,6 +50,13 @@
     // Allows us to lint absolute imports within codebase
     "import/resolver": {
       "node": {
+        "extensions" : [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+  ]
+        ,
         "moduleDirectory": ["node_modules", "src/"]
       }
     }

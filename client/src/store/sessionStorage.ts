@@ -1,4 +1,4 @@
-export const loadState = () => {
+export const loadState = (): object | undefined => {
   try {
     const serializedState = sessionStorage.getItem('state');
 
@@ -11,7 +11,8 @@ export const loadState = () => {
   }
 };
 
-export const saveState = (state) => {
+export const saveState = (state: object): void => {
+  console.log(state);
   try {
     const serializedState = JSON.stringify(state);
     sessionStorage.setItem('state', serializedState);
