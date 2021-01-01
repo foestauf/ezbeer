@@ -21,7 +21,7 @@ const Navigation = () => {
   );
 };
 
-const NavButton = (props) => {
+const NavButton = (props: { to: string; title: string; }) => {
   const { to, title } = props;
   return (
     <LinkContainer to={to}>

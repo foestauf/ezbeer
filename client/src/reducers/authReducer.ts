@@ -3,14 +3,14 @@ import {
     USER_LOADING
 } from "../actions/types";
 
-const isEmpty = require("is-empty");
+import isEmpty from "is-empty";
 
 const initialState = {
     isAuthenticated: false,
     user: {},
     loading: false
 };
-export default function(state = initialState, action) {
+export default function(state = initialState, action: { type: string; payload: any; }) {
     switch (action.type) {
         case SET_CURRENT_USER:
             return {
