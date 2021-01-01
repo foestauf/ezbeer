@@ -156,8 +156,9 @@ export default function () {
                 <div id="ingredients">
                   <Container>
                     <Row>
-                      <Col>Amount</Col>
                       <Col>Name</Col>
+                      <Col>Amount</Col>
+
                       <Col>Type</Col>
                       <Col>%</Col>
                       <Col>IBU</Col>
