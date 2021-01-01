@@ -15,6 +15,7 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { addIngredient, setRecipe } from '../actions/recipeActions';
 import Toaster from './toast';
+import { IngredientView } from './RecipeProfile/IngredientView';
 
 export default function () {
   const dispatch = useDispatch();
@@ -277,9 +278,13 @@ const NewMaterialModal = (props) => {
             onChange={(e) => changeHandler(e)}
           />
           <InputGroup.Prepend>
-            <InputGroup.Text>Style</InputGroup.Text>
+            <InputGroup.Text>Quantity</InputGroup.Text>
           </InputGroup.Prepend>
           <FormControl placeholder="Quantity" name="quantity" onChange={(e) => changeHandler(e)} />
+          <InputGroup.Prepend>
+            <InputGroup.Text>Type</InputGroup.Text>
+          </InputGroup.Prepend>
+          <FormControl placeholder="Type" name="type" onChange={(e) => changeHandler(e)} />
         </InputGroup>
       </Modal.Body>
       <Modal.Footer>
@@ -287,21 +292,5 @@ const NewMaterialModal = (props) => {
         <Button onClick={saveIngredient}>Save</Button>
       </Modal.Footer>
     </Modal>
-  );
-};
-
-const IngredientView = (props) => {
-  const { quantity, name, type } = props;
-  return (
-    <Row>
-      <Col>{quantity}</Col>
-
-      <Col>{name}</Col>
-      <Col>{type}</Col>
-      <Col />
-      <Col />
-      <Col />
-      <Col />
-    </Row>
   );
 };

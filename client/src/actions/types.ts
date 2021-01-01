@@ -5,6 +5,7 @@ export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const SET_CURRENT_RECIPE = 'SET_CURRENT_RECIPE';
 export const SET_RECIPE_NAME = 'SET_RECIPE_NAME';
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
+export const UPDATE_INGREDIENT = 'UPDATE_INGREDIENT';
 
 export interface Decode {
   auth: object,
