@@ -7,15 +7,15 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import Modal from 'react-bootstrap/Modal';
 import '../css/recipes.scss';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-import { addIngredient, setRecipe } from '../actions/recipeActions';
+import { setRecipe } from '../actions/recipeActions';
 import Toaster from './toast';
 import { IngredientView } from './RecipeProfile/IngredientView';
+import { MaterialModal } from './RecipeProfile/MaterialModal';
 
 export default function () {
   const dispatch = useDispatch();
@@ -62,7 +62,7 @@ export default function () {
         <title>EZ Beer: Recipe Manager</title>
       </Helmet>
       <Container fluid>
-        <NewMaterialModal
+        <MaterialModal
           show={modalShow}
           recipe={recipe}
           backdrop="static"
@@ -156,9 +156,9 @@ export default function () {
                 <div id="ingredients">
                   <Container>
                     <Row>
+                      <Col>View</Col>
                       <Col>Name</Col>
                       <Col>Amount</Col>
-
                       <Col>Type</Col>
                       <Col>%</Col>
                       <Col>IBU</Col>
@@ -232,66 +232,3 @@ export default function () {
     </div>
   );
 }
-
-const NewMaterialModal = (props) => {
-  const recipe = useSelector((state) => state.recipe);
-  const [newMaterial, setNewMaterial] = useState({ _id: recipe._id });
-  const { onHide } = props;
-  const dispatch = useDispatch();
-
-  const changeHandler = (event) => {
-    event.persist();
-    const { value } = event.target;
-    setNewMaterial((prevState1) => ({
-      ...prevState1,
-      [event.target.name]: value,
-    }));
-  };
-
-  const saveIngredient = async () => {
-    const ingredientObj = newMaterial;
-    await axios.put('/api/recipes/add-ingredient', ingredientObj).then((res) => {
-      if (res.status === 200) {
-        console.log('Ingredient addition successful');
-        props.onHide();
-        props.toast();
-        delete ingredientObj._id;
-        dispatch(addIngredient(ingredientObj));
-        setNewMaterial({ _id: recipe._id });
-      }
-    });
-  };
-
-  return (
-    <Modal animation {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">New Recipe</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <InputGroup>
-          <InputGroup.Prepend>
-            <InputGroup.Text>Name</InputGroup.Text>
-          </InputGroup.Prepend>
-          <FormControl
-            placeholder="Name"
-            name="name"
-            aria-label="Beername"
-            onChange={(e) => changeHandler(e)}
-          />
-          <InputGroup.Prepend>
-            <InputGroup.Text>Quantity</InputGroup.Text>
-          </InputGroup.Prepend>
-          <FormControl placeholder="Quantity" name="quantity" onChange={(e) => changeHandler(e)} />
-          <InputGroup.Prepend>
-            <InputGroup.Text>Type</InputGroup.Text>
-          </InputGroup.Prepend>
-          <FormControl placeholder="Type" name="type" onChange={(e) => changeHandler(e)} />
-        </InputGroup>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={onHide}>Close</Button>
-        <Button onClick={saveIngredient}>Save</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-};

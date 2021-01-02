@@ -47,7 +47,6 @@ router.put('/update-recipe', (req, res) => {
       $set: {
         ...req.body,
       },
-      $currentDate: { lastModified: true },
     },
     { upsert: true },
   )
